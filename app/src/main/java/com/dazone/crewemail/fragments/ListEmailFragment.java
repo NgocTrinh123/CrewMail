@@ -125,7 +125,7 @@ public class ListEmailFragment extends BaseFragment implements BaseHTTPCallBack 
         mMailType = getArguments().getInt("mailType");
         mMailBoxClassName = getArguments().getString("emailBoxClassName");
         mIsTrashBox = getArguments().getBoolean("isTrashBox");
-        genDataSort();
+        genDataSort(mMailBoxClassName);
     }
 
 
@@ -639,16 +639,87 @@ public class ListEmailFragment extends BaseFragment implements BaseHTTPCallBack 
         return popupWindow;
     }
 
-    public void genDataSort() {
+    public void genDataSort(String mMailBoxClassName) {
         listSort = new ArrayList<>();
-        listSort.add(new MenuSortData(getString(R.string.string_title_menu_name), 0, 1));
-        listSort.add(new MenuSortData(getString(R.string.string_title_menu_to), 0, 2));
-        listSort.add(new MenuSortData(getString(R.string.string_title_menu_title), 0, 3));
-        listSort.add(new MenuSortData(getString(R.string.string_title_menu_reg_date), 1, 4));
-        listSort.add(new MenuSortData(getString(R.string.string_title_menu_size), 0, 5));
-        listSort.add(new MenuSortData(getString(R.string.string_title_menu_important), 0, 6));
-        listSort.add(new MenuSortData(getString(R.string.string_title_menu_read), 0, 7));
-        listSort.add(new MenuSortData(getString(R.string.string_title_menu_file), 0, 8));
+        if (mMailBoxClassName.equals("OutBoxIcon") || mMailBoxClassName.equals("DraftBoxIcon")) {
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_name), 0, 1));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_to), 0, 2));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_title), 0, 3));
+            listSort.add(new MenuSortData(getString(R.string.date_sent), 1, 4));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_size), 0, 5));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_important), 0, 6));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_read), 0, 7));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_file), 0, 8));
+        } else {
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_name), 0, 1));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_to), 0, 2));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_title), 0, 3));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_reg_date), 1, 4));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_size), 0, 5));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_important), 0, 6));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_read), 0, 7));
+            listSort.add(new MenuSortData(getString(R.string.string_title_menu_file), 0, 8));
+        }
+//        switch (mMailBoxClassName) {
+//            case "InboxIcon":
+//
+//                break;
+//            case "SortedIcon":
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_name), 0, 1));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_to), 0, 2));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_title), 0, 3));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_reg_date), 1, 4));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_size), 0, 5));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_important), 0, 6));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_read), 0, 7));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_file), 0, 8));
+//                break;
+//            case "OutBoxIcon":
+//
+//                break;
+//            case "DraftBoxIcon":
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_name), 0, 1));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_to), 0, 2));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_title), 0, 3));
+//                listSort.add(new MenuSortData(getString(R.string.date_sent), 1, 4));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_size), 0, 5));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_important), 0, 6));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_read), 0, 7));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_file), 0, 8));
+//                break;
+//            case "SpamBoxIcon":
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_name), 0, 1));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_to), 0, 2));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_title), 0, 3));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_reg_date), 1, 4));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_size), 0, 5));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_important), 0, 6));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_read), 0, 7));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_file), 0, 8));
+//                break;
+//            case "TrashBoxIcon":
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_name), 0, 1));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_to), 0, 2));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_title), 0, 3));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_reg_date), 1, 4));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_size), 0, 5));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_important), 0, 6));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_read), 0, 7));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_file), 0, 8));
+//                break;
+//            default:
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_name), 0, 1));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_to), 0, 2));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_title), 0, 3));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_reg_date), 1, 4));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_size), 0, 5));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_important), 0, 6));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_read), 0, 7));
+//                listSort.add(new MenuSortData(getString(R.string.string_title_menu_file), 0, 8));
+//                break;
+//        }
+
+
     }
 
     @Override

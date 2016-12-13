@@ -13,6 +13,10 @@ public class Prefs {
     private final String SERVER_SITE = "serversite";
     private final String ACCESSTOKEN = "accesstoken";
     private final String MAIL_MENU_LIST = "mail_menu_list";
+    private final String DOMAIN = "domain";
+    private final String PASS = "pass";
+    private final String USER_ID = "user_id";
+
     private static final String PREF_FLAG_GMC_ID = "flag_gmc_id";
 
     public Prefs() {
@@ -105,5 +109,29 @@ public class Prefs {
 
     public long getLongValue(String KEY, long defvalue) {
         return prefs.getLong(KEY, defvalue);
+    }
+
+    public void putDomain(String domain) {
+        prefs.edit().putString(DOMAIN, domain);
+    }
+
+    public String getDomain() {
+        return prefs.getString(DOMAIN, "");
+    }
+
+    public void putPassword(String password) {
+        prefs.edit().putString(PASS, password);
+    }
+
+    public String getPass() {
+        return prefs.getString(PASS, "");
+    }
+
+    public void putUsetId(String userId) {
+        prefs.edit().putString(USER_ID, userId);
+    }
+
+    public String getUserId() {
+        return prefs.getString(USER_ID, "");
     }
 }

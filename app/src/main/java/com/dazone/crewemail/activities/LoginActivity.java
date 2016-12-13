@@ -19,6 +19,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ import com.dazone.crewemail.database.ServerSiteDBHelper;
 import com.dazone.crewemail.interfaces.BaseHTTPCallBack;
 import com.dazone.crewemail.interfaces.OnAutoLoginCallBack;
 import com.dazone.crewemail.interfaces.OnCheckDevice;
+import com.dazone.crewemail.utils.PreferenceUtilities;
 import com.dazone.crewemail.utils.Prefs;
 import com.dazone.crewemail.utils.Statics;
 import com.dazone.crewemail.utils.Urls;
@@ -60,9 +62,6 @@ public class LoginActivity extends BaseActivity implements OnCheckDevice, BaseHT
     private Context context;
     boolean firstLogin = true;
 
-    private RelativeLayout btnLogin;
-    private RelativeLayout logo;
-
     private EditText etUserName;
     private EditText etPassword;
     private EditText etServer;
@@ -85,6 +84,10 @@ public class LoginActivity extends BaseActivity implements OnCheckDevice, BaseHT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.app_base_color));
+        }
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BROADCAST_ACTION);
         registerReceiver(mAccountReceiver, intentFilter);
@@ -95,7 +98,7 @@ public class LoginActivity extends BaseActivity implements OnCheckDevice, BaseHT
         intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         sendBroadcast(intent);
 
-        logo = (RelativeLayout) findViewById(R.id.logo);
+        RelativeLayout logo = (RelativeLayout) findViewById(R.id.logo);
         logo.setVisibility(View.VISIBLE);
 
         final SoftKeyboardDetectorView softKeyboardDetectorView = new SoftKeyboardDetectorView(this);
@@ -125,10 +128,6 @@ public class LoginActivity extends BaseActivity implements OnCheckDevice, BaseHT
             }
         });
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.myColor_PrimaryDark));
-        }
-
         prefs = DaZoneApplication.getInstance().getPrefs();
         server_site = DaZoneApplication.getInstance().getPrefs().getServerSite();
 
@@ -151,11 +150,11 @@ public class LoginActivity extends BaseActivity implements OnCheckDevice, BaseHT
 
     public void firstChecking() {
 //        if (firstLogin) {
-            if (Util.isNetworkAvailable()) {
-                doLogin();
-            } else {
-                showNetworkDialog();
-            }
+        if (Util.isNetworkAvailable()) {
+            doLogin();
+        } else {
+            showNetworkDialog();
+        }
 //        }
     }
 
@@ -230,7 +229,7 @@ public class LoginActivity extends BaseActivity implements OnCheckDevice, BaseHT
         etUserName.setPrivateImeOptions("defaultInputmode=english;");
         etServer.setPrivateImeOptions("defaultInputmode=english;");
 
-        btnLogin = (RelativeLayout) findViewById(R.id.login_btn_login);
+        Button btnLogin = (Button) findViewById(R.id.login_btn_login);
         etUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -254,6 +253,10 @@ public class LoginActivity extends BaseActivity implements OnCheckDevice, BaseHT
 
         etPassword = (EditText) findViewById(R.id.login_edt_password);
         etServer = (EditText) findViewById(R.id.login_edt_server);
+
+        etPassword.setText(new PreferenceUtilities().getPass());
+        etServer.setText(new PreferenceUtilities().getDomain());
+        etUserName.setText(new PreferenceUtilities().getUserId());
         etServer.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -439,7 +442,7 @@ public class LoginActivity extends BaseActivity implements OnCheckDevice, BaseHT
         Prefs prefs = DaZoneApplication.getInstance().getPrefs();
         prefs.putServerSite(server_site); // group ID
 
-        HttpRequest.getInstance().AutoLogin(company_domain, userID, temp_server_site,  prefs, new OnAutoLoginCallBack() {
+        HttpRequest.getInstance().AutoLogin(company_domain, userID, temp_server_site, prefs, new OnAutoLoginCallBack() {
             @Override
             public void OnAutoLoginSuccess(String response) {
                 createGMC();

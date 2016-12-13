@@ -6,9 +6,6 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.dazone.crewemail.DaZoneApplication;
 import com.dazone.crewemail.R;
-import com.dazone.crewemail.dto.BelongToDepartmentDTO;
-import com.dazone.crewemail.dto.ErrorDto;
-import com.dazone.crewemail.dto.MessageDto;
 import com.dazone.crewemail.data.AccountData;
 import com.dazone.crewemail.data.AttachData;
 import com.dazone.crewemail.data.ErrorData;
@@ -23,11 +20,12 @@ import com.dazone.crewemail.database.AccountUserDBHelper;
 import com.dazone.crewemail.database.OrganizationUserDBHelper;
 import com.dazone.crewemail.database.ServerSiteDBHelper;
 import com.dazone.crewemail.database.UserDBHelper;
+import com.dazone.crewemail.dto.BelongToDepartmentDTO;
+import com.dazone.crewemail.dto.MessageDto;
 import com.dazone.crewemail.helper.MailHelper;
 import com.dazone.crewemail.interfaces.BaseHTTPCallBack;
 import com.dazone.crewemail.interfaces.BaseHTTPCallBackWithString;
 import com.dazone.crewemail.interfaces.OnAutoLoginCallBack;
-import com.dazone.crewemail.interfaces.OnCheckDevice;
 import com.dazone.crewemail.interfaces.OnGetAllOfUser;
 import com.dazone.crewemail.interfaces.OnGetInfoUser;
 import com.dazone.crewemail.interfaces.OnGetListOfMailAccount;
@@ -37,6 +35,7 @@ import com.dazone.crewemail.interfaces.OnMailDetailCallBack;
 import com.dazone.crewemail.interfaces.OnMailListCallBack;
 import com.dazone.crewemail.interfaces.OnMenuListCallBack;
 import com.dazone.crewemail.utils.EmailBoxStatics;
+import com.dazone.crewemail.utils.PreferenceUtilities;
 import com.dazone.crewemail.utils.Prefs;
 import com.dazone.crewemail.utils.TimeUtils;
 import com.dazone.crewemail.utils.Urls;
@@ -102,7 +101,7 @@ public class HttpRequest {
         });
     }
 
-    public void login(String userID, String password, String companyDomain, String server_link, final Prefs prefs, final BaseHTTPCallBack baseHTTPCallBack) {
+    public void login(final String userID, final String password, final String companyDomain, String server_link, final Prefs prefs, final BaseHTTPCallBack baseHTTPCallBack) {
         final String url = server_link + Urls.URL_GET_LOGIN;
         Map<String, String> params = new HashMap<>();
         params.put("languageCode", Locale.getDefault().getLanguage().toUpperCase());
@@ -121,8 +120,14 @@ public class HttpRequest {
                     Gson gson = new Gson();
                     UserData userDto = gson.fromJson(response, UserData.class);
                     if (userDto != null) {
-                        if (prefs != null)
+                        if (prefs != null) {
                             prefs.putUserData(response, userDto.getSession());
+
+                        }
+                        PreferenceUtilities preferenceUtilities = DaZoneApplication.getInstance().getPreferenceUtilities();
+                        preferenceUtilities.setDomain(companyDomain);
+                        preferenceUtilities.setPass(password);
+                        preferenceUtilities.setUserId(userID);
                         UserDBHelper.addUser(userDto);
                         baseHTTPCallBack.onHTTPSuccess();
                     }
@@ -190,7 +195,7 @@ public class HttpRequest {
         });
     }
 
-    public void AutoLogin(String companyDomain, String userID, String server_link, final Prefs prefs,  final OnAutoLoginCallBack callBack) {
+    public void AutoLogin(String companyDomain, String userID, String server_link, final Prefs prefs, final OnAutoLoginCallBack callBack) {
         String url = server_link + Urls.URL_AUTO_LOGIN;
 
         Map<String, String> params = new HashMap<>();

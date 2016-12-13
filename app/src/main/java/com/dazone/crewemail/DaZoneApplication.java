@@ -10,6 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.dazone.crewemail.customviews.FontSizes;
+import com.dazone.crewemail.utils.PreferenceUtilities;
 import com.dazone.crewemail.utils.Prefs;
 import com.dazone.crewemail.utils.Statics;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -22,12 +23,14 @@ public class DaZoneApplication extends Application {
     private static DaZoneApplication sInstance;
     private RequestQueue mRequestQueue;
     private static Prefs mPrefs;
+    private static PreferenceUtilities preferenceUtilities;
     private static boolean mMessageViewFixedWidthFont = false;
     private static boolean mAutofitWidth;
     private static final FontSizes fontSizes = new FontSizes();
     public ImageLoader imageLoader = ImageLoader.getInstance();
 
     private static boolean activityRunning;
+
     public static boolean isActivityRunning() {
         return activityRunning;
     }
@@ -39,6 +42,7 @@ public class DaZoneApplication extends Application {
     public static void activityPaused() {
         activityRunning = false;
     }
+
     @Override
     public void onCreate() {
 //        Fresco.initialize(this);
@@ -125,5 +129,13 @@ public class DaZoneApplication extends Application {
 
     public static FontSizes getFontSizes() {
         return fontSizes;
+    }
+
+    public synchronized PreferenceUtilities getPreferenceUtilities() {
+        if (preferenceUtilities == null) {
+            preferenceUtilities = new PreferenceUtilities();
+        }
+
+        return preferenceUtilities;
     }
 }

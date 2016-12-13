@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/st_bg"
@@ -29,7 +28,7 @@
                 android:layout_toRightOf="@+id/btn_back"
                 android:background="@android:color/transparent"
                 android:padding="0dp"
-                android:text="@string/app_name"
+                android:text="@string/action_settings"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
 
@@ -39,7 +38,7 @@
         android:id="@+id/ln_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/setting_mgtop"
+        android:padding="@dimen/margin_big"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
@@ -61,24 +60,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/setting_mgleft"
+            android:layout_marginLeft="@dimen/margin_normal"
             android:text="@string/profle"
             android:textSize="@dimen/setting_tv_size" />
 
     </LinearLayout>
 
-    <TextView
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/setting_mgtop"
-        android:background="@color/gray_light"
-        />
+        android:background="@color/gray_light" />
 
     <LinearLayout
         android:id="@+id/ln_general"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/setting_mgtop"
+        android:padding="@dimen/margin_big"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
         android:visibility="visible">
@@ -107,22 +104,22 @@
 
     </LinearLayout>
 
-    <TextView
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/setting_mgtop"
         android:background="@color/gray_light" />
 
     <LinearLayout
         android:id="@+id/ln_notify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/setting_mgtop"
         android:background="?android:attr/selectableItemBackground"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_big">
 
 
         <com.dazone.crewemail.customviews.RoundedLayoutCircle
+            android:id="@+id/rcl_notify"
             android:layout_width="@dimen/setting_page_icon_under"
             android:layout_height="@dimen/setting_page_icon_under"
             android:layout_gravity="center"
@@ -141,27 +138,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/setting_mgleft"
+            android:layout_toRightOf="@+id/rcl_notify"
             android:text="@string/setting_notification"
             android:textSize="@dimen/setting_tv_size" />
 
     </LinearLayout>
 
-    <TextView
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/setting_mgtop"
         android:background="@color/gray_light" />
 
     <LinearLayout
         android:id="@+id/ln_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/setting_mgtop"
         android:background="?android:attr/selectableItemBackground"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_big">
 
 
         <com.dazone.crewemail.customviews.RoundedLayoutCircle
+            android:id="@+id/rcl_logout"
             android:layout_width="@dimen/setting_page_icon_under"
             android:layout_height="@dimen/setting_page_icon_under"
             android:layout_gravity="center"
@@ -180,15 +178,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/setting_mgleft"
+            android:layout_toRightOf="@+id/rcl_logout"
             android:text="@string/logout"
             android:textSize="@dimen/setting_tv_size" />
 
     </LinearLayout>
 
-    <TextView
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/setting_mgtop"
         android:background="@color/gray_light" />
 
 </LinearLayout>
