@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="list_home_status">
+        <item>출근</item>
+        <item>외근</item>
+        <item>복귀</item>
+        <item>퇴근</item>
+    </string-array>
+    <string-array name="list_staff_status">
+        <item>전체</item>
+        <item>출근</item>
+        <item>외근</item>
+        <item>결근</item>
+    </string-array>
+
+    <string-array name="list_domain">
+        <item>vn.bizsw.co.kr:8080</item>
+        <item>dazone.crewcloud.net</item>
+    </string-array>
+</resources>

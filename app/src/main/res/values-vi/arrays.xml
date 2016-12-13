@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="list_home_status">
+        <item>Vào ca</item>
+        <item>Làm việc bên ngoài</item>
+        <item>Trở lại</item>
+        <item>Tan ca</item>
+    </string-array>
+    <string-array name="list_staff_status">
+        <item>Tất cả</item>
+        <item>Làm việc</item>
+        <item>Ra ngoài</item>
+        <item>Vắng mặt</item>
+    </string-array>
+
+    <string-array name="list_domain">
+        <item>vn.bizsw.co.kr:8080</item>
+        <item>dazone.crewcloud.net</item>
+    </string-array>
+</resources>

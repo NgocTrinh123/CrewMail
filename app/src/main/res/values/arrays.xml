@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="list_home_status">
+        <item>Check In</item>
+        <item>Work Outside</item>
+        <item>Return</item>
+        <item>Chect Out</item>
+    </string-array>
+    <string-array name="list_staff_status">
+        <item>All</item>
+        <item>Working</item>
+        <item>Work Outside</item>
+        <item>Absent</item>
+    </string-array>
+
+    <string-array name="list_domain">
+        <item>vn.bizsw.co.kr:8080</item>
+        <item>dazone.crewcloud.net</item>
+    </string-array>
+
+    <array name="account">
+        <item>phamthanhtung@dazone.co.kr</item>
+        <item>phamthanhtung2990@gmail.com</item>
+    </array>
+
+    <array name="priority">
+        <item>None</item>
+        <item>High</item>
+        <item>Normal</item>
+        <item>Low</item>
+    </array>
+</resources>

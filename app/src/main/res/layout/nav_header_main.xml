@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/colorPrimary"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:padding="@dimen/activity_vertical_margin"
+              android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/nav_header_avatar"
+        style="@style/default_avatar_45dp"
+        android:layout_marginRight="@dimen/dimen_5_10"
+        android:layout_alignParentLeft="true"
+        fresco:roundAsCircle="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/nav_header_avatar">
+
+        <TextView
+            android:id="@+id/nav_header_full_name"
+            style="@style/text_16sp_white"
+            android:text="Name"/>
+
+        <TextView
+            android:id="@+id/nav_header_email"
+            style="@style/text_13sp_white"
+            android:text="android.studio@android.com"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/dimen_30_60"
+        android:layout_height="@dimen/dimen_30_60"
+        android:layout_alignParentRight="true"
+        android:id="@+id/setting"
+        android:src="@drawable/home_menu_setting"
+        android:layout_margin="@dimen/dimen_2_4"
+        android:paddingTop="@dimen/dimen_10_20"/>
+
+</RelativeLayout>
