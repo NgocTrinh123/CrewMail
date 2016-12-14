@@ -309,4 +309,5 @@
     <string name="the_new_mail_has_arrived">새로운 메일이 도착했습니다.</string>
     <string name="are_you_sure_loguot">로그아웃 하시겠습니까?</string>
     <string name="date_sent">보낸 날짜</string>
+    <string name="remove_passcode">암호를 제거</string>
 </resources>

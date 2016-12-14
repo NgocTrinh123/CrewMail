@@ -6,6 +6,7 @@ package com.dazone.crewemail.event;
 
 public class PinEvent {
     private String pin;
+    private String title;
 
     public PinEvent(String pin) {
         this.pin = pin;
@@ -17,5 +18,13 @@ public class PinEvent {
 
     public void setPin(String pin) {
         this.pin = pin;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

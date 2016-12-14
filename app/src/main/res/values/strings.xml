@@ -313,4 +313,5 @@
     <string name="the_new_mail_has_arrived">The new mail has arrived.</string>
     <string name="are_you_sure_loguot">Are you sure you want to logout?</string>
     <string name="date_sent">Date Sent</string>
+    <string name="remove_passcode">Remove Passcode</string>
 </resources>

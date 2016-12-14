@@ -226,6 +226,9 @@ public class PinActivity extends BaseActivity implements View.OnClickListener {
                 strPINStep2 = strPIN;
                 if (strPINStep1.equals(strPINStep2)) {
                     new Prefs().putStringValue(Statics.KEY_PREFERENCES_PIN, strPINStep1);
+                    PinEvent event = new PinEvent(this.strPIN);
+                    event.setTitle(getString(R.string.remove_passcode));
+                    EventBus.getDefault().post(event);
                     finish();
                 } else {
                     strPIN = "";
@@ -244,6 +247,9 @@ public class PinActivity extends BaseActivity implements View.OnClickListener {
                 String strPIN = new Prefs().getStringValue(Statics.KEY_PREFERENCES_PIN, "");
                 if (this.strPIN.equals(strPIN)) {
                     new Prefs().putStringValue(Statics.KEY_PREFERENCES_PIN, "");
+                    PinEvent event = new PinEvent(this.strPIN);
+                    event.setTitle(getString(R.string.setting_general_set_password_code));
+                    EventBus.getDefault().post(event);
                     finish();
                 } else {
                     this.strPIN = "";
@@ -296,6 +302,7 @@ public class PinActivity extends BaseActivity implements View.OnClickListener {
                 String strPIN = new Prefs().getStringValue(Statics.KEY_PREFERENCES_PIN, "");
                 if (strPIN.equals(this.strPIN)) {
                     PinEvent event = new PinEvent(this.strPIN);
+                    event.setTitle("Remove Passcode");
                     EventBus.getDefault().post(event);
                     finish();
                 } else {

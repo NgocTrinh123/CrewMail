@@ -65,6 +65,7 @@
         android:paddingRight="@dimen/padding_block">
 
         <TextView
+            android:id="@+id/activity_setting_general_tv_set_passcode"
             style="@style/SettingRow"
             android:layout_width="wrap_content"
             android:layout_alignParentLeft="true"

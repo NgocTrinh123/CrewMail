@@ -7,11 +7,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dazone.crewemail.R;
 import com.dazone.crewemail.activities.BaseActivity;
+import com.dazone.crewemail.event.PinEvent;
 import com.dazone.crewemail.utils.Prefs;
 import com.dazone.crewemail.utils.Statics;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by Dat on 5/5/2016.
@@ -26,6 +31,7 @@ public class GeneralSettingActivity extends BaseActivity implements View.OnClick
     private ImageView statusPasscode;
     private ImageView statusAdjust;
     private LinearLayout layoutChangePasscode;
+    private TextView tvSetPasscode;
 
     /**
      * PARAMS
@@ -36,12 +42,14 @@ public class GeneralSettingActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_general);
+        EventBus.getDefault().register(this);
         initView();
     }
 
     private void initView() {
         btnBack = (ImageView) findViewById(R.id.btn_back);
         btnBack.setOnClickListener(this);
+        tvSetPasscode = (TextView) findViewById(R.id.activity_setting_general_tv_set_passcode);
         layoutSetPassCode = (RelativeLayout) findViewById(R.id.layout_set_pass_code);
         layoutSetPassCode.setOnClickListener(this);
         statusPasscode = (ImageView) findViewById(R.id.status_set_passcode);
@@ -122,5 +130,19 @@ public class GeneralSettingActivity extends BaseActivity implements View.OnClick
     private void onBack() {
         overridePendingTransition(R.anim.finish_activity_show, R.anim.finish_activity_hide);
         finish();
+    }
+
+    @Subscribe
+    public void onPinEvent(PinEvent event) {
+        if (event != null) {
+            tvSetPasscode.setText(event.getTitle());
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

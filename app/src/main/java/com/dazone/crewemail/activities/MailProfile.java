@@ -4,18 +4,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.dazone.crewemail.DaZoneApplication;
 import com.dazone.crewemail.R;
@@ -31,7 +26,6 @@ import com.dazone.crewemail.interfaces.OnGetInfoUser;
 import com.dazone.crewemail.utils.Util;
 import com.dazone.crewemail.webservices.HttpRequest;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -43,7 +37,7 @@ public class MailProfile extends BaseActivity implements View.OnClickListener {
     private UserData userData;
     private ProgressDialog pdia;
     private ImageView btn_back;
-//    private TextView tvGeneral;
+    //    private TextView tvGeneral;
 //    private TextView tv_profile;
 //    private TextView tvNotification;
 //    private TextView tvLogout;
@@ -120,7 +114,7 @@ public class MailProfile extends BaseActivity implements View.OnClickListener {
                 .memoryCache(new WeakMemoryCache())
                 .build();
         imageLoader.init(config);
-        imageLoader.displayImage(String.valueOf(imageUri),imgAvatar);
+        imageLoader.displayImage(String.valueOf(imageUri), imgAvatar);
 //        imgAvatar.setImageURI(imageUri);
     }
 
@@ -183,7 +177,7 @@ public class MailProfile extends BaseActivity implements View.OnClickListener {
     }
 
     private void showDialog() {
-        AlertDialogView.normalAlertDialogWithCancel(this, getString(R.string.app_name), getString(R.string.dialog_are_you_sure), getString(R.string.dialog_logout), getString(R.string.dialog_cancel), new AlertDialogView.OnAlertDialogViewClickEvent() {
+        AlertDialogView.normalAlertDialogWithCancel(this, "", getString(R.string.are_you_sure_loguot), getString(R.string.no), getString(R.string.dialog_cancel), new AlertDialogView.OnAlertDialogViewClickEvent() {
             @Override
             public void onOkClick(DialogInterface alertDialog) {
                 HttpRequest.getInstance().Logout(new BaseHTTPCallBack() {
