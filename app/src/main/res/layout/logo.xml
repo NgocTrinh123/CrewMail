@@ -3,7 +3,7 @@
     android:id="@+id/logo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/app_base_color"
     android:orientation="vertical">
 
     <TextView

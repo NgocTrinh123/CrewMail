@@ -9,6 +9,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.crashlytics.android.Crashlytics;
 import com.dazone.crewemail.customviews.FontSizes;
 import com.dazone.crewemail.utils.PreferenceUtilities;
 import com.dazone.crewemail.utils.Prefs;
@@ -17,6 +18,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import io.fabric.sdk.android.Fabric;
 
 public class DaZoneApplication extends Application {
     private static final String TAG = "DaZoneApplication";
@@ -47,7 +50,7 @@ public class DaZoneApplication extends Application {
     public void onCreate() {
 //        Fresco.initialize(this);
         super.onCreate();
-        //Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics());
         sInstance = this;
         Fresco.initialize(this);
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
