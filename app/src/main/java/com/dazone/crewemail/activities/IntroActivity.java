@@ -1,6 +1,7 @@
 package com.dazone.crewemail.activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,18 +16,23 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.dazone.crewemail.BuildConfig;
 import com.dazone.crewemail.DaZoneApplication;
 import com.dazone.crewemail.R;
+import com.dazone.crewemail.activities.setting.PinActivity;
 import com.dazone.crewemail.database.OrganizationUserDBHelper;
+import com.dazone.crewemail.event.PinEvent;
 import com.dazone.crewemail.utils.Prefs;
+import com.dazone.crewemail.utils.Statics;
 import com.dazone.crewemail.utils.Util;
 import com.dazone.crewemail.webservices.WebClient;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -47,6 +53,7 @@ public class IntroActivity extends BaseActivity {
         setContentView(R.layout.activity_intro);
         OrganizationUserDBHelper.clearData();
 
+        EventBus.getDefault().register(this);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.app_base_color));
         }
@@ -62,9 +69,16 @@ public class IntroActivity extends BaseActivity {
 
     private void startApplication() {
         Prefs prefs = DaZoneApplication.getInstance().getPrefs();
-
+        String pin = new Prefs().getStringValue(Statics.KEY_PREFERENCES_PIN, "");
         if (!TextUtils.isEmpty(prefs.getAccessToken())) {
-            new WebClientAsync_HasApplication_v2().execute();
+            if (!TextUtils.isEmpty(pin)) {
+                Toast.makeText(getApplicationContext(), pin, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, PinActivity.class);
+                intent.putExtra(Statics.KEY_INTENT_TYPE_PIN, Statics.TYPE_PIN_CONFIRM);
+                startActivity(intent);
+            } else {
+                new WebClientAsync_HasApplication_v2().execute();
+            }
         } else {
             Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -151,28 +165,28 @@ public class IntroActivity extends BaseActivity {
             Prefs prefs = DaZoneApplication.getInstance().getPrefs();
 
             WebClient.HasApplication_v2(Util.getLanguageCode(), Util.getTimeZoneOffset(), "Mail3", prefs.getServerSite(), new WebClient.OnWebClientListener() {
-                        @Override
-                        public void onSuccess(JsonNode jsonNode) {
-                            try {
-                                mIsFailed = false;
-                                mHasApplication = jsonNode.get("HasApplication").asBoolean();
-                                mMessage = jsonNode.get("Message").asText();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                @Override
+                public void onSuccess(JsonNode jsonNode) {
+                    try {
+                        mIsFailed = false;
+                        mHasApplication = jsonNode.get("HasApplication").asBoolean();
+                        mMessage = jsonNode.get("Message").asText();
+                    } catch (Exception e) {
+                        e.printStackTrace();
 
-                                mIsFailed = true;
-                                mHasApplication = false;
-                                mMessage = getString(R.string.loginActivity_message_wrong_server_site);
-                            }
-                        }
+                        mIsFailed = true;
+                        mHasApplication = false;
+                        mMessage = getString(R.string.loginActivity_message_wrong_server_site);
+                    }
+                }
 
-                        @Override
-                        public void onFailure() {
-                            mIsFailed = true;
-                            mHasApplication = false;
-                            mMessage = getString(R.string.loginActivity_message_wrong_server_site);
-                        }
-                    });
+                @Override
+                public void onFailure() {
+                    mIsFailed = true;
+                    mHasApplication = false;
+                    mMessage = getString(R.string.loginActivity_message_wrong_server_site);
+                }
+            });
 
             return null;
         }
@@ -203,25 +217,25 @@ public class IntroActivity extends BaseActivity {
         protected Void doInBackground(Void... params) {
             Prefs prefs = DaZoneApplication.getInstance().getPrefs();
 
-            WebClient.CheckSessionUser_v2(Util.getLanguageCode(), Util.getTimeZoneOffset(), prefs.getAccessToken(), prefs.getServerSite(),  new WebClient.OnWebClientListener() {
-                        @Override
-                        public void onSuccess(JsonNode jsonNode) {
-                            mIsFailed = false;
+            WebClient.CheckSessionUser_v2(Util.getLanguageCode(), Util.getTimeZoneOffset(), prefs.getAccessToken(), prefs.getServerSite(), new WebClient.OnWebClientListener() {
+                @Override
+                public void onSuccess(JsonNode jsonNode) {
+                    mIsFailed = false;
 
-                            try {
-                                mIsSuccess = (jsonNode.get("success").asInt() == 1);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mIsSuccess = false;
-                            }
-                        }
+                    try {
+                        mIsSuccess = (jsonNode.get("success").asInt() == 1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mIsSuccess = false;
+                    }
+                }
 
-                        @Override
-                        public void onFailure() {
-                            mIsFailed = true;
-                            mIsSuccess = false;
-                        }
-                    });
+                @Override
+                public void onFailure() {
+                    mIsFailed = true;
+                    mIsSuccess = false;
+                }
+            });
 
             return null;
         }
@@ -252,14 +266,14 @@ public class IntroActivity extends BaseActivity {
 
             Prefs prefs = DaZoneApplication.getInstance().getPrefs();
             WebClient.Logout_v2(prefs.getAccessToken(), prefs.getServerSite(), new WebClient.OnWebClientListener() {
-                        @Override
-                        public void onSuccess(JsonNode jsonNode) {
-                        }
+                @Override
+                public void onSuccess(JsonNode jsonNode) {
+                }
 
-                        @Override
-                        public void onFailure() {
-                        }
-                    });
+                @Override
+                public void onFailure() {
+                }
+            });
 
             return null;
         }
@@ -382,7 +396,7 @@ public class IntroActivity extends BaseActivity {
             FileOutputStream fileOutputStream = null;
 
             try {
-                URL apkUrl = new URL("http://www.crewcloud.net/Android/Package/" + mApkFileName +".apk");
+                URL apkUrl = new URL("http://www.crewcloud.net/Android/Package/" + mApkFileName + ".apk");
                 urlConnection = (HttpURLConnection) apkUrl.openConnection();
                 inputStream = urlConnection.getInputStream();
                 bufferedInputStream = new BufferedInputStream(inputStream);
@@ -457,6 +471,23 @@ public class IntroActivity extends BaseActivity {
 
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(PinEvent event) {
+        if (event != null) {
+            String pin = event.getPin();
+            if (pin.equals(new Prefs().getStringValue(Statics.KEY_PREFERENCES_PIN, ""))) {
+                callActivity(ListEmailActivity.class);
+                finish();
             }
         }
     }

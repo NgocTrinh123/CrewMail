@@ -1,21 +1,20 @@
 package com.dazone.crewemail.activities.setting;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dazone.crewemail.R;
 import com.dazone.crewemail.activities.BaseActivity;
-import com.dazone.crewemail.activities.LoginActivity;
+import com.dazone.crewemail.event.PinEvent;
 import com.dazone.crewemail.utils.Prefs;
 import com.dazone.crewemail.utils.Statics;
 import com.dazone.crewemail.utils.Util;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Dat on 5/5/2016.
@@ -107,7 +106,9 @@ public class PinActivity extends BaseActivity implements View.OnClickListener {
      */
     private void getDataFromIntent() {
         Bundle bundle = getIntent().getExtras();
-        typePIN = bundle.getInt(Statics.KEY_INTENT_TYPE_PIN, 0);
+        if (bundle != null) {
+            typePIN = bundle.getInt(Statics.KEY_INTENT_TYPE_PIN, 0);
+        }
     }
 
     /**
@@ -294,6 +295,8 @@ public class PinActivity extends BaseActivity implements View.OnClickListener {
             case 1:
                 String strPIN = new Prefs().getStringValue(Statics.KEY_PREFERENCES_PIN, "");
                 if (strPIN.equals(this.strPIN)) {
+                    PinEvent event = new PinEvent(this.strPIN);
+                    EventBus.getDefault().post(event);
                     finish();
                 } else {
                     tvInstruction.setText(Util.getString(R.string.pin_instruction_error));

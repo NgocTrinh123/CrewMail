@@ -7,15 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.dazone.crewemail.DaZoneApplication;
 import com.dazone.crewemail.R;
-import com.dazone.crewemail.activities.setting.PinActivity;
 import com.dazone.crewemail.customviews.AlertDialogView;
 import com.dazone.crewemail.utils.Prefs;
-import com.dazone.crewemail.utils.Statics;
 import com.dazone.crewemail.utils.Util;
 
 /**
@@ -96,18 +93,18 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         isPause = false;
-        if (isAppWentToBg && !(this instanceof LoginActivity)) {
-            isAppWentToBg = false;
-            if (!(this instanceof PinActivity) || ((PinActivity) this).typePIN != 4) {
-                String strPIN = new Prefs().getStringValue(Statics.KEY_PREFERENCES_PIN, "");
-                Intent intent;
-                if (!TextUtils.isEmpty(strPIN)) {
-                    intent = new Intent(this, PinActivity.class);
-                    intent.putExtra(Statics.KEY_INTENT_TYPE_PIN, Statics.TYPE_PIN_CONFIRM);
-                    startActivity(intent);
-                }
-            }
-        }
+//        if (isAppWentToBg && !(this instanceof LoginActivity)) {
+//            isAppWentToBg = false;
+//            if (!(this instanceof PinActivity) || ((PinActivity) this).typePIN != 4) {
+//                String strPIN = new Prefs().getStringValue(Statics.KEY_PREFERENCES_PIN, "");
+//                Intent intent;
+//                if (!TextUtils.isEmpty(strPIN)) {
+//                    intent = new Intent(this, PinActivity.class);
+//                    intent.putExtra(Statics.KEY_INTENT_TYPE_PIN, Statics.TYPE_PIN_CONFIRM);
+//                    startActivity(intent);
+//                }
+//            }
+//        }
     }
 
 
