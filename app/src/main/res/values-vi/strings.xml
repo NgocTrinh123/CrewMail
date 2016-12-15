@@ -216,7 +216,7 @@
     <string name="string_title_menu_name">Người gửi</string>
     <string name="string_title_menu_to">Người nhận</string>
     <string name="string_title_menu_title">Tiêu đề</string>
-    <string name="string_title_menu_reg_date">Ngày tạo</string>
+    <string name="string_title_menu_reg_date">Ngày nhận</string>
     <string name="string_title_menu_size">Độ lớn</string>
     <string name="string_title_menu_important">Quan trọng</string>
     <string name="string_title_menu_read">Ngày đọc</string>

@@ -65,6 +65,9 @@ public class PinActivity extends BaseActivity implements View.OnClickListener {
         getData();
     }
 
+
+
+
     private void initView() {
         btnBack = (ImageView) findViewById(R.id.btn_back);
         btnBack.setOnClickListener(this);
@@ -354,9 +357,7 @@ public class PinActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void onBack() {
-        if (typePIN != Statics.TYPE_PIN_CONFIRM) {
             overridePendingTransition(R.anim.finish_activity_show, R.anim.finish_activity_hide);
             finish();
-        }
     }
 }

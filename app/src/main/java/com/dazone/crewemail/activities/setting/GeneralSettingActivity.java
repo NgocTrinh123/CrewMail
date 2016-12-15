@@ -58,6 +58,7 @@ public class GeneralSettingActivity extends BaseActivity implements View.OnClick
         statusAdjust = (ImageView) findViewById(R.id.status_adjust);
         layoutAdjust = (RelativeLayout) findViewById(R.id.layout_adjust);
         layoutAdjust.setOnClickListener(this);
+
     }
 
     @Override
@@ -75,9 +76,12 @@ public class GeneralSettingActivity extends BaseActivity implements View.OnClick
         if (TextUtils.isEmpty((strPIN.trim()))) {
             layoutChangePasscode.setVisibility(View.GONE);
             statusPasscode.setBackgroundResource(R.drawable.bg_circle_gray);
+            tvSetPasscode.setText(getString(R.string.setting_general_set_password_code));
+
         } else {
             layoutChangePasscode.setVisibility(View.VISIBLE);
             statusPasscode.setBackgroundResource(R.drawable.bg_circle_blue);
+            tvSetPasscode.setText(getString(R.string.remove_passcode));
 
         }
 

@@ -219,7 +219,7 @@
     <string name="string_title_menu_name">보낸사람</string>
     <string name="string_title_menu_to">받는사람</string>
     <string name="string_title_menu_title">제목</string>
-    <string name="string_title_menu_reg_date">작성일</string>
+    <string name="string_title_menu_reg_date">받은 날짜</string>
     <string name="string_title_menu_size">크기</string>
     <string name="string_title_menu_important">중요성</string>
     <string name="string_title_menu_read">읽은날짜</string>

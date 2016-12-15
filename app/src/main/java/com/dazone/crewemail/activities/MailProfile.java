@@ -177,7 +177,7 @@ public class MailProfile extends BaseActivity implements View.OnClickListener {
     }
 
     private void showDialog() {
-        AlertDialogView.normalAlertDialogWithCancel(this, "", getString(R.string.are_you_sure_loguot), getString(R.string.no), getString(R.string.dialog_cancel), new AlertDialogView.OnAlertDialogViewClickEvent() {
+        AlertDialogView.normalAlertDialogWithCancel(this, "", getString(R.string.are_you_sure_loguot), getString(R.string.yes), getString(R.string.dialog_cancel), new AlertDialogView.OnAlertDialogViewClickEvent() {
             @Override
             public void onOkClick(DialogInterface alertDialog) {
                 HttpRequest.getInstance().Logout(new BaseHTTPCallBack() {

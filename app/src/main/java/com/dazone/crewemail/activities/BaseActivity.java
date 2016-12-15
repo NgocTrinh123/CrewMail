@@ -93,6 +93,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         isPause = false;
+
 //        if (isAppWentToBg && !(this instanceof LoginActivity)) {
 //            isAppWentToBg = false;
 //            if (!(this instanceof PinActivity) || ((PinActivity) this).typePIN != 4) {

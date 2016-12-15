@@ -134,6 +134,7 @@
 
     <dimen name="setting_mgtop">10dp</dimen>
     <dimen name="setting_tv_size">17sp</dimen>
+    <dimen name="setting_tv_size_default">15sp</dimen>
     <dimen name="setting_mgleft">20dp</dimen>
     <dimen name="setting_page_icon">50dp</dimen>
     <dimen name="setting_page_icon_under">40dp</dimen>

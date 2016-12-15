@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -24,7 +25,9 @@ import com.dazone.crewemail.DaZoneApplication;
 import com.dazone.crewemail.R;
 import com.dazone.crewemail.activities.setting.PinActivity;
 import com.dazone.crewemail.database.OrganizationUserDBHelper;
+import com.dazone.crewemail.dialog.BaseDialog;
 import com.dazone.crewemail.event.PinEvent;
+import com.dazone.crewemail.utils.DialogUtils;
 import com.dazone.crewemail.utils.Prefs;
 import com.dazone.crewemail.utils.Statics;
 import com.dazone.crewemail.utils.Util;
@@ -54,17 +57,47 @@ public class IntroActivity extends BaseActivity {
         OrganizationUserDBHelper.clearData();
 
         EventBus.getDefault().register(this);
+
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.app_base_color));
         }
 
-        if (checkPermissions()) {
-            Thread thread = new Thread(new UpdateRunnable());
-            thread.setDaemon(true);
-            thread.start();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!Util.isNetworkAvailable()) {
+            DialogUtils.showDialogWithMessageButton(this, getString(R.string.no_wifi_error), getString(R.string.yes), getString(R.string.no), new BaseDialog.OnCloseDialog() {
+                @Override
+                public void onPositive() {
+                    Intent wireLess = new Intent(
+                            Settings.ACTION_WIFI_SETTINGS);
+                    startActivity(wireLess);
+                }
+
+                @Override
+                public void onNegative() {
+                }
+
+                @Override
+                public void onClose() {
+
+                }
+            });
         } else {
-            setPermissions();
+            if (checkPermissions()) {
+                Thread thread = new Thread(new UpdateRunnable());
+                thread.setDaemon(true);
+                thread.start();
+            } else {
+                setPermissions();
+            }
         }
+
+
     }
 
     private void startApplication() {
@@ -72,7 +105,6 @@ public class IntroActivity extends BaseActivity {
         String pin = new Prefs().getStringValue(Statics.KEY_PREFERENCES_PIN, "");
         if (!TextUtils.isEmpty(prefs.getAccessToken())) {
             if (!TextUtils.isEmpty(pin)) {
-                Toast.makeText(getApplicationContext(), pin, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, PinActivity.class);
                 intent.putExtra(Statics.KEY_INTENT_TYPE_PIN, Statics.TYPE_PIN_CONFIRM);
                 startActivity(intent);
